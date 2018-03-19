@@ -5,7 +5,6 @@ import AuthInputs from '../authInputs';
 import Autocomplete from './voteAutocomplete';
 import Fees from '../../constants/fees';
 import InfoParagraph from '../infoParagraph';
-import VoteUrlProcessor from '../voteUrlProcessor';
 import styles from './voteDialog.css';
 import votingConst from '../../constants/voting';
 import { getTotalVotesCount, getNewVotesCount } from '../../utils/voting';
@@ -48,7 +47,6 @@ export default class VoteDialog extends React.Component {
     return (
       <article>
         <form id='voteform'>
-          <VoteUrlProcessor />
           <Autocomplete
             votedDelegates={this.props.delegates}
             votes={this.props.votes}
