@@ -13,6 +13,7 @@ import PrivateWrapper from '../privateWrapper';
 import { ActionButton } from './../toolbox/buttons/button';
 import styles from './header.css';
 import RelativeLink from '../relativeLink';
+import CustomCountDown from './customCountDown';
 import routes from './../../constants/routes';
 
 class Header extends React.Component {
@@ -53,7 +54,6 @@ class Header extends React.Component {
                           this.props.account.expireTime !== 0) &&
                           this.props.account.passphrase) ?
                         <div>
-                          {this.props.t('Address timeout in')} <i> </i>
                           <Countdown
                             date={this.props.account.expireTime}
                             renderer={CountDownTemplate}
@@ -61,7 +61,12 @@ class Header extends React.Component {
                               this.props.removeSavedAccountPassphrase();
                             }
                             }
-                          />
+                          ><CustomCountDown
+                              resetTimer={this.props.resetTimer}
+                              autoLog={this.props.autoLog}
+                              t={this.props.t}
+                            />
+                          </Countdown>
                         </div> : <div></div>}
                     </div>
                       : <div className={styles.timer}>
