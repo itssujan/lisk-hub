@@ -45,31 +45,11 @@ Feature: Voting page
     And I click "confirm"
     And I wait 0.5 seconds
     Then I should see text "You’re votes are being processed and will be confirmed. It may take up to 10 minutes to be secured in the blockchain." in "result box message" element
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-  @pending
-  Scenario: should allow to select delegates by URL
-    Given I'm logged in as "delegate candidate"
-    When I go to "/main/voting/vote?votes=standby_27,standby_28,standby_29,nonexisting_22&unvotes=standby_33"
-    And I wait 3 seconds
-    Then I should see text "3 delegate names were successfully resolved for voting." in "upvotes message" element
-    And I should see text "1 of the delegate names selected for unvoting was not currently voted for:standby_33" in "notVotedYet message" element
-    And I should see text "1 of the provided delegate names could not be resolved:nonexisting_22" in "notFound message" element
-    And I should see "vote list" element with text matching regexp:
-      """
-      standby_2[789]
-      standby_2[789]
-      standby_2[789]
-      """
-=======
->>>>>>> Comment e2e voting test
-=======
 
   Scenario: should allow to select delegates by URL
     Given I'm logged in as "delegate candidate"
     When I go to "/main/voting/vote?votes=genesis_12,genesis_14,genesis_16"
     And I wait 1 seconds
     Then I should see text "Confirm (Fee: 1 LSK)" in "confirm" element
+    And I should see 3 instances of "selected row"
 
->>>>>>> :hammer: Add e2e test
