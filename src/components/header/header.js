@@ -48,7 +48,12 @@ class Header extends React.Component {
                       <LiskAmount val={this.props.account.balance}/>
                       <small> LSK</small>
                     </div>
-                    <CopyToClipboard value={this.props.account.address} className={`${styles.address} account-information-address`}/>
+                    <CopyToClipboard
+                      value={this.props.account.address}
+                      className={`${styles.address} account-information-address`}
+                      copyClassName={styles.copy}/>
+                    {!this.props.autoLog && this.props.account.passphrase ?
+                      <div className={styles.unlocked}>{this.props.t('Unlocked')}</div> : <div></div>}
                     {this.props.autoLog ? <div className={styles.timer}>
                       {((this.props.account.expireTime &&
                           this.props.account.expireTime !== 0) &&
@@ -69,12 +74,7 @@ class Header extends React.Component {
                           </Countdown>
                         </div> : <div></div>}
                     </div>
-                      : <div className={styles.timer}>
-                        {this.props.account.passphrase ? '' : <span>
-                          <FontIcon value='locked' className={styles.lock}/> {this.props.t('Account locked!')}
-                        </span>
-                        }
-                      </div>
+                      : <div></div>
                     }
                   </div>
                   <Link to={`${routes.accounts.path}`} className={styles.avatar}>
