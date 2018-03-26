@@ -17,7 +17,8 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
-          presets: ['es2015', 'react', 'stage-3'],
+          babelrc: false,
+          presets: ['@babel/preset-env', '@babel/react', '@babel/preset-stage-3'],
           plugins: ['syntax-trailing-function-commas', 'import-glob', 'transform-decorators-legacy'],
           env: {
             test: {
