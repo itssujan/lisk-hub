@@ -23,18 +23,13 @@ class Onboarding extends React.Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.addSteps(nextProps.appLoaded);
+  }
+
   componentDidMount() {
-    window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
-    this.steps = steps(this.props.t);
-    if (this.props.showDelegates) {
-      this.steps.splice(7, 0, {
-        title: this.props.t('Delegate voting'),
-        text: this.props.t('View forging delegates and vote for the ones you support.'),
-        selector: '#voting',
-        position: 'right',
-        style: styles.step,
-      });
-    }
+    this.addSteps(this.props.appLoaded);
   }
 
   componentWillUnmount() {
@@ -45,10 +40,21 @@ class Onboarding extends React.Component {
     this.setState({ isDesktop: window.innerWidth > breakpoints.m });
   }
 
+  addSteps(appLoaded) {
+    if (appLoaded && !this.stepsAdded) {
+      window.addEventListener('resize', throttle(this.resizeWindow.bind(this), 1000));
+      this.steps = steps(this.props.t);
+      if (!this.props.showDelegates) {
+        this.steps = this.steps.filter(step => step.selector !== '#voting');
+      }
+
+      this.stepsAdded = true;
+    }
+  }
+
   reset() {
     this.isAlreadyOnboarded = true;
     this.onboardingStarted = false;
-    window.localStorage.setItem('onboarding', 'false');
     this.setState({ start: false, intro: true, skip: false });
   }
 
@@ -77,6 +83,7 @@ class Onboarding extends React.Component {
     if (onboardingFinished) {
       if (this.onboardingFinished) this.reset();
       this.onboardingFinished = true;
+      window.localStorage.setItem('onboarding', 'false');
     }
   }
 
